@@ -1,0 +1,471 @@
+{% extends 'header.html' %}
+{% load humanize %}
+{% block tiltle %} Listings {% endblock %}
+{% block content %}
+
+    <style>
+        .size {
+            max-height: 400px !important;
+        }
+    </style>
+
+    <section class="w3l-about-breadcrumb">
+        <div class="breadcrumb-bg breadcrumb-bg-about pt-5">
+            <div class="container pt-lg-5 py-3">
+            </div>
+        </div>
+    </section>
+    <section class="w3l-breadcrumb">
+        <div class="container">
+            <ul class="breadcrumbs-custom-path">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <a href="{% url 'listings' %}">
+                    <li class="active "><span class="fa fa-angle-right mx-2" aria-hidden="true"></span> Hostels</li>
+                </a>
+                <li class="active"><span class="fa fa-angle-right mx-2" aria-hidden="true"></span>{{ listing.category }}
+                </li>
+            </ul>
+        </div>
+    </section>
+    <!--/blog-post-->
+    {% include 'partials/_alerts.html' %}
+    <section class="w3l-blog post-content py-5">
+        <div class="container py-lg-4 py-md-3 py-2">
+            <div class="inner mb-4">
+                <ul class="blog-single-author-date align-items-center">
+                    <li><span class="fa fa-bed" style="color: #5A2218 ;"></span> {{ listing.beds }} Beds</li>
+                    <li><span class="fa fa-diamond" style="color: #b8860b ;"></span> {{ listing.standard }} </li>
+                    <li><span class="fa fa-bath" style="color: #16B9EC ;"></span> {{ listing.baths }} Baths</li>
+                    <li><span class="fa fa-share-square-o" style="color: #84DB47 ;"></span> {{ listing.square_feet }} sqrft</li>
+                </ul>
+                <ul class="blog-single-author-date align-items-center">
+                    <li><span class="fa fa-clock-o" style="color: #A45EC1 ;"></span>{{ listing.list_date | timesince }} ago</li>
+                    {% if current_rating %}
+                    <li><span class="fa fa-star" style="color:#EAA225 ;"></span> {{ current_rating }}</li>
+                    {% else %}
+                    <li><span class="fa fa-star"> No Rating made for this Hostel</span></li>
+                    {% endif %}
+                </ul>
+            </div>
+            <div class="post-content">
+                <h2 class="title-single">{{ listing.title }}</h2>
+            </div>
+            <div class="blo-singl mb-4">
+                <ul class="blog-single-author-date align-items-center" ">
+                    <li><span class="fa fa-map-marker" style="color: #F55241 ;"></span> {{ listing.area }}, {{ listing.city }}</li>
+                    <li><span class="fa fa-th-large" style="color: #16B9EC ;"></span> {{ listing.category }}</li>
+                </ul>
+                <ul class="share-post">
+                    <a style="color: #FF9933 " class="cost-estate m-o">Rs {{ listing.price | intcomma }}</a>
+                </ul>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 w3l-news">
+                    <div class="blog-single-post">
+                        <div class="single-post-image mb-5">
+                            <div class="owl-blog owl-carousel owl-theme">
+                                <div class="item">
+                                    <div class="card">
+                                        <img style="height:400px" src="{{ listing.photo_main.url }}"
+                                             class="size img-fluid radius-image" alt="image">
+                                    </div>
+                                </div>
+                                {% if listing.photo_1 %}
+                                    <div class="item">
+                                        <div class="card">
+                                            <img style="height:400px" src="{{ listing.photo_1.url }}"
+                                                 class="size img-fluid radius-image" alt="image">
+                                        </div>
+                                    </div>
+                                {% endif %}
+                                {% if listing.photo_2 %}
+                                    <div class="item">
+                                        <div class="card">
+                                            <img style="height:400px" src="{{ listing.photo_2.url }}"
+                                                 class="size img-fluid radius-image" alt="image">
+                                        </div>
+                                    </div>
+                                {% endif %}
+                                {% if listing.photo_3 %}
+                                    <div class="item">
+                                        <div class="card">
+                                            <img style="height:400px" src="{{ listing.photo_3.url }}"
+                                                 class="size img-fluid radius-image" alt="image">
+                                        </div>
+                                    </div>
+                                {% endif %}
+                                {% if listing.photo_4 %}
+                                    <div class="item">
+                                        <div class="card">
+                                            <img style="height:400px" src="{{ listing.photo_4.url }}"
+                                                 class="size img-fluid radius-image" alt="image">
+                                        </div>
+                                    </div>
+                                {% endif %}
+                                {% if listing.photo_5 %}
+                                    <div class="item">
+                                        <div class="card">
+                                            <img style="height:400px" src="{{ listing.photo_5.url }}"
+                                                 class="size img-fluid radius-image" alt="image">
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="single-post-content">
+                            <h3 class="post-content-title mb-3">Address</h3> {{ listing.address }}, {{ listing.city}}
+
+                        </div>
+
+                        <div class="single-bg-white">
+                            <h3 class="post-content-title mb-4">Description</h3> {{ listing.description }}
+
+<!--                            <div class="agent-map">-->
+<!--                                <iframe-->
+<!--                                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d217760.17132131557!2d74.19430497459705!3d31.482864081428232!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39190483e58107d9%3A0xc23abe6ccc7e2462!2sLahore%2C%20Punjab%2C%20Pakistan!5e0!3m2!1sen!2s!4v1616657308136!5m2!1sen!2s"-->
+<!--                                        frameborder="0" style="border:0" allowfullscreen=""></iframe>-->
+<!--                            </div>-->
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="sidebar-side col-lg-4 col-md-12 col-sm-12 mt-lg-0 mt-5">
+                    <aside class="sidebar">
+
+                        <!-- Popular Post Widget-->
+                        <div class="sidebar-widget popular-posts">
+
+
+                            <article class="post">
+                                <figure class="post-thumb"><img src="{{ listing.owner.profile_pic.url }}" class="radius-image" alt="">
+                                </figure>
+                                <div class="text mb-0">
+                                    <a>
+                                        {{ listing.owner.first_name }} {{ listing.owner.last_name }}
+                                    </a>
+                                    {% if request.user.is_authenticated %}
+                                        <a>
+                                            <div class="btn fa fa-phone btn-outline-info btn-sm"> +92 {{ listing.owner.phone }}</div>
+                                        </a>
+                                        {% csrf_token %}
+                                        </div>
+                                    {% else %}
+
+                                        <a href="{% url 'login' %}">
+                                            <div class="btn fa fa-phone btn-outline-info btn-sm "> Get Phone No.</div>
+                                        </a>
+
+                                    {% endif %}
+                            </article>
+                            {% if request.user.is_authenticated %}
+
+                                <a href="{{ i.rent_agreement.url }}"
+                                   class="btn fas fa-comment-alt fa fa-download btn-outline-primary  btn-style w-100"
+                                   download="/Tenancy_Agreement.pdf"> Rental
+                                    Agreement</a href="{{ i.rent_agreement.url }}">
+                            {% else %}
+                                <a href="{% url 'login' %}" class="btn btn-outline-primary btn-style ">Login
+                                    to Reserve, Rate & Add to Favourites Hostel</a>
+                            <br>
+                            <br>
+                                <a href="{% url 'login' %}" class="btn btn-outline-info btn-style ">Login
+                                    to Download Rent Agreement Form</a>
+                            {% endif %}
+                            <br>
+                            <br>
+                            {% if request.user == listing.owner %}
+                            {% else %}
+                            {% if request.user.is_authenticated %}
+
+                                <button class="btn fas fa-comment-alt btn-outline-success btn-style w-100" data-toggle="modal"
+                                        data-target="#inquiryModal">Reserve a Hostel
+                                </button>
+
+                                <div class="modal fade" id="inquiryModal" role="dialog">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="inquiryModalLabel">Reserve a Hostel</h5>
+                                                <button type="button" class="close" data-dismiss="modal">
+                                                    <span>&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form action="{% url 'inquiries' %}" method="POST">
+                                                    {% csrf_token %}
+                                                    {% if user.is_authenticated %}
+                                                        <input type="hidden" name="user_id" value="{{ user.id }}">
+                                                    {% else %}
+                                                        <input type="hidden" name="user_id" value="0">
+                                                    {% endif %}
+                                                    <input type="hidden" name="owner_mail"
+                                                           value="{{ listing.owner.email }}">
+                                                    <input type="hidden" name="listing_id" value="{{ listing.id }}">
+                                                    <input type="hidden" name="owner_id" value="{{ listing.owner.id }}">
+                                                    <input type="hidden" name="name" class="form-control"
+                                                               value="{{ request.user.first_name }} {{ request.user.last_name }}" readonly>
+                                                    <input type="hidden" name="email" class="form-control"
+                                                               value="{{ request.user.email }}" readonly>
+                                                    <div class="form-group">
+                                                        <label for="property_name" class="col-form-label">Title</label>
+                                                        <input type="text" name="listing" class="form-control"
+                                                               value="{{ listing.title }}" readonly>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="owner_name" class="col-form-label">Owner Name</label>
+                                                        <input type="text" class="form-control" name="owner_name"
+                                                               value="{{ listing.owner.first_name }} {{ listing.owner.last_name }}" readonly>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="email_owner" class="col-form-label">Owner Email</label>
+                                                        <input type="email" name="email_owner" class="form-control"
+                                                                value="{{ listing.owner.email }}" readonly>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="rooms" class="col-form-label">Number of
+                                                            Rooms</label>
+                                                        <input type="number" name="rooms" class="form-control" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="message" class="col-form-label">Reservation
+                                                            Message</label>
+                                                        <input type="text" name="message" class="form-control" required>
+                                                    </div>
+                                                    <hr>
+                                                    <input type="submit" value="Send"
+                                                           class="btn btn-block btn-secondary">
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            <br>
+                            <br>
+                            {% if request.user.is_authenticated %}
+                                <form action="{% url 'listing' listing.id %}" method="POST">
+                                  {% csrf_token %}
+                                  {% if favourite %}
+                                    <input type="hidden" name="favourite_val" value="unfavourite">
+                                    <button class="btn fas fa-comment-alt btn-outline-danger btn-style w-100" type="submit">UnFavorite</button>
+                                  {% else %}
+                                    <input type="hidden" name="favourite_val" value="favourite">
+                                    <button class="btn fas fa-comment-alt btn-outline-info btn-style w-100" type="submit">Favorite</button>
+                                  {% endif %}
+                                </form>
+                              {% endif %}
+                              <br>
+                              {% if rate %}
+                                <form action="{%url 'listing' listing.id%}" method="POST">
+                                  {% csrf_token %}
+                                  <div style="display: flex;">
+                                    <input  name="my_rating" placeholder="Enter value from 1-5" class="form-control" required>
+                                    <button class="btn btn-outline-info" type="submit">Rate</button>
+                                  </div>
+                                    {% else %}
+                                  {% if request.user.is_authenticated %}
+                                    <button class="btn fas fa-comment-alt btn-outline-danger btn-style w-100">You already rated this Hostel</button>
+                                  {% endif %}
+                                </form>
+                              {% endif %}
+                              {% endif %}
+                            <br>
+                            <br>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--//blog-posts-->
+
+
+    <!-- Footer -->
+    <footer id="main-footer" class="py-4 bg-primary text-white text-center">
+        Copyright &copy;
+        <span class="year"></span> Hostel Hunter
+    </footer>
+
+
+    <!-- move top -->
+    <button onclick="topFunction()" id="movetop" title="Go to top">
+        &#10548;
+    </button>
+    <script>
+        // When the user scrolls down 20px from the top of the document, show the button
+        window.onscroll = function () {
+            scrollFunction()
+        };
+
+        function scrollFunction() {
+            if (document.getElementById("movetop")) {
+                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                    document.getElementById("movetop").style.display = "block";
+                } else {
+                    document.getElementById("movetop").style.display = "none";
+                }
+            }
+        }
+
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+    </script>
+    <!-- /move top -->
+    </section>
+
+    <!-- jQuery and Bootstrap JS -->
+    <script src="/static/hostelhunter/js/jquery-3.3.1.min.js"></script>
+
+    <script src="/static/hostelhunter/js/theme-change.js"></script><!-- theme switch js (light and dark)-->
+
+    <!-- stats number counter-->
+    <script src="/static/hostelhunter/js/jquery.waypoints.min.js"></script>
+    <script src="/static/hostelhunter/js/jquery.countup.js"></script>
+    <script>
+        $('.counter').countUp();
+    </script>
+    <!-- //stats number counter -->
+
+    <!-- owlcarousel -->
+    <script src="/static/hostelhunter/js/owl.carousel.js"></script>
+    <!-- script for blog post slider -->
+    <script>
+        $(document).ready(function () {
+            $('.owl-blog').owlCarousel({
+                loop: true,
+                margin: 30,
+                nav: false,
+                responsiveClass: true,
+                autoplay: false,
+                autoplayTimeout: 5000,
+                autoplaySpeed: 1000,
+                autoplayHoverPause: false,
+                responsive: {
+                    0: {
+                        items: 1,
+                        nav: true
+                    },
+                    480: {
+                        items: 1,
+                        nav: true
+                    },
+                    700: {
+                        items: 1,
+                        nav: true
+                    },
+                    1090: {
+                        items: 1,
+                        nav: true
+                    }
+                }
+            })
+        })
+    </script>
+    <!-- //script for blog post slider -->
+
+    <!-- script for tesimonials carousel slider -->
+    <script>
+        $(document).ready(function () {
+            $("#owl-demo1").owlCarousel({
+                loop: true,
+                nav: false,
+                margin: 50,
+                responsiveClass: true,
+                responsive: {
+                    0: {
+                        items: 1,
+                        nav: false
+                    },
+                    736: {
+                        items: 1,
+                        nav: false
+                    }
+                }
+            })
+        })
+    </script>
+    <!-- //script for tesimonials carousel slider -->
+
+    <script src="/static/hostelhunter/js/jquery.magnific-popup.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.popup-with-zoom-anim').magnificPopup({
+                type: 'inline',
+
+                fixedContentPos: false,
+                fixedBgPos: true,
+
+                overflowY: 'auto',
+
+                closeBtnInside: true,
+                preloader: false,
+
+                midClick: true,
+                removalDelay: 300,
+                mainClass: 'my-mfp-zoom-in'
+            });
+
+            $('.popup-with-move-anim').magnificPopup({
+                type: 'inline',
+
+                fixedContentPos: false,
+                fixedBgPos: true,
+
+                overflowY: 'auto',
+
+                closeBtnInside: true,
+                preloader: false,
+
+                midClick: true,
+                removalDelay: 300,
+                mainClass: 'my-mfp-slide-bottom'
+            });
+        });
+    </script>
+
+    <!-- disable body scroll which navbar is in active -->
+    <script>
+        $(function () {
+            $('.navbar-toggler').click(function () {
+                $('body').toggleClass('noscroll');
+            })
+        });
+    </script>
+    <!-- disable body scroll which navbar is in active -->
+
+    <!-- MENU-JS -->
+    <script>
+        $(window).on("scroll", function () {
+            var scroll = $(window).scrollTop();
+
+            if (scroll >= 80) {
+                $("#site-header").addClass("nav-fixed");
+            } else {
+                $("#site-header").removeClass("nav-fixed");
+            }
+        });
+
+        //Main navigation Active Class Add Remove
+        $(".navbar-toggler").on("click", function () {
+            $("header").toggleClass("active");
+        });
+        $(document).on("ready", function () {
+            if ($(window).width() > 991) {
+                $("header").removeClass("active");
+            }
+            $(window).on("resize", function () {
+                if ($(window).width() > 991) {
+                    $("header").removeClass("active");
+                }
+            });
+        });
+    </script>
+
+    <script src="/static/hostelhunter/js/bootstrap.min.js"></script>
+
+{% endblock %}

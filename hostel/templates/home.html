@@ -1,0 +1,341 @@
+{% extends 'header.html' %}
+{% load static from static %}
+{% load humanize %}
+{% block tiltle %} Listings {% endblock %}
+
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="icon" href="/static/hostelhunter/images/icon.png">
+    <title class="fa fa-home"> Hostel Hunter - Hostel Hunter Category Bootstrap Responsive Web Application</title>
+
+    <!-- google fonts -->
+    <link href="//fonts.googleapis.com/css2?family=Kumbh+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="/static/hostelhunter/css/style-starter.css">
+</head>
+
+<style>
+    .hello-msg {
+        font-size: 18px;
+        color: #fff;
+        margin-right: 20px;
+    }
+
+    .center {
+        text-align: center;
+    }
+
+
+</style>
+<body>
+{% block content %}
+    <section class="w3l-cover-3">
+        <div class="cover top-bottom">
+            <div class="container">
+                <div class="middle-section text-center">
+                    {% include 'partials/_alerts.html' %}
+                    <div class="section-width">
+                        <p>It's just like your home!</p>
+                        <h2>Find a hostel today</h2>
+                        <div class="most-searches">
+                        </div>
+                        <form action="{% url 'search' %}" class="w3l-cover-3-gd" method="GET">
+                            <input type="search" name="text" placeholder="Enter keywords" required>
+                            <span class="input-group-btn">
+								<select class="btn btn-default" name="category">
+									<option selected="selected" value="">Select Category (All)</option>
+                                    {% for key,value in category_choices.items %}
+                                        <option value="{{ value }}"
+                                                {% if value == values.category %}
+                                                selected
+                                                {% endif %}
+                                        >{{ value }}</option>
+                                    {% endfor %}
+								</select>
+							</span>
+                            <span class="input-group-btn">
+								<select class="btn btn-default" name="area">
+									<option selected="selected" value="">Select Area (All)</option>
+                                    {% for key,value in area_choices.items %}
+                                        <option value="{{ value }}"
+                                                {% if value == values.area %}
+                                                selected
+                                                {% endif %}
+                                        >{{ value }}</option>
+                                    {% endfor %}
+
+								</select>
+							</span>
+                            <span class="input-group-btn">
+								<select class="btn btn-default" name="standard">
+									<option selected="selected" value="">Select Standard (All)</option>
+                                    {% for key,value in standard_choices.items %}
+                                        <option value="{{ value }}"
+                                                {% if value == values.standard %}
+                                                selected
+                                                {% endif %}>
+                                            {{ value }}</option>
+                                    {% endfor %}
+
+								</select>
+							</span>
+                            <button type="submit" class="center btn-primary">Search</button>
+                        </form>
+                    </div>
+                    <section id="bottom" class="demo">
+                        <a href="#bottom"><span></span>Scroll</a>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <section class="locations-1" id="locations">
+        <div class="locations py-5">
+            <div class="container py-lg-5 py-md-4 py-2">
+                <div class="heading text-center mx-auto">
+                    <h3 class="title-big">Top Hostels</h3>
+                </div>
+
+                <section class="locations-1" id="locations">
+                    <div class="locations py-5">
+                        <div class="container py-lg-5 py-md-4 py-2">
+                            <div class="row">
+                                {% if listings %}
+                                    {% for listing in listings %}
+                                        <div class="col-lg-4 col-md-6 listing-img">
+                                            <a href="{% url 'listing' listing.id %}">
+                                                <div class="box16">
+                                                    <div class="rentext-listing-category"></div>
+                                                    <img style="height: 192px;" class="img-fluid"
+                                                         src="{{ listing.photo_main.url }}" alt="">
+                                                    <div class="box-content">
+                                                        <h3 class="title">Rs {{ listing.price | intcomma }}</h3>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <div class="listing-details blog-details align-self">
+                                                <h4 class="user_title agent">
+                                                    <a href="{% url 'listing' listing.id %}" >{{ listing.title }}</a>
+                                                </h4>
+                                                <li><span class="fa fa-map-marker" style="color: #F55241 ;" ></span> {{ listing.area }}, {{ listing.city }}</li>
+                                                <ul class="mt-3 estate-info">
+
+                                                    <li><span class="fa fa-th-large" style="color: #16B9EC ;"></span>{{ listing.category }}</li>
+                                                    <li><span class="fa fa-diamond" style="color: #b8860b ;"></span>{{ listing.standard }}</li>
+                                                    <li><span class="fa fa-clock-o" style="color: #A45EC1 ;"></span>{{ listing.list_date | timesince }} ago</li>
+                                                </ul>
+                                            </div>
+                                            
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    <div class="inner mb-4">
+                                        <p> Currently there are no listings Available</p>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Footer -->
+    <footer id="main-footer" class="py-4 bg-primary text-white text-center">
+        Copyright &copy;
+        <span class="year"></span> Hostel Hunter
+    </footer>
+
+
+    <!-- move top -->
+    <button onclick="topFunction()" id="movetop" title="Go to top">
+        &#10548;
+    </button>
+    <script>
+        // When the user scrolls down 20px from the top of the document, show the button
+        window.onscroll = function () {
+            scrollFunction()
+        };
+
+        function scrollFunction() {
+            if (document.getElementById("movetop")) {
+                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                    document.getElementById("movetop").style.display = "block";
+                } else {
+                    document.getElementById("movetop").style.display = "none";
+                }
+            }
+        }
+
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+    </script>
+    <!-- /move top -->
+    </section>
+
+    <!-- jQuery and Bootstrap JS -->
+
+    <script src="/static/hostelhunter/js/theme-change.js"></script><!-- theme switch js (light and dark)-->
+
+    <!-- stats number counter-->
+    <script src="/static/hostelhunter/js/jquery.waypoints.min.js"></script>
+    <script src="/static/hostelhunter/js/jquery.countup.js"></script>
+    <script>
+        $('.counter').countUp();
+    </script>
+    <!-- //stats number counter -->
+
+    <!-- owlcarousel -->
+    <script src="/static/hostelhunter/js/owl.carousel.js"></script>
+    <!-- script for blog post slider -->
+    <script>
+        $(document).ready(function () {
+            $('.owl-blog').owlCarousel({
+                loop: true,
+                margin: 30,
+                nav: false,
+                responsiveClass: true,
+                autoplay: false,
+                autoplayTimeout: 5000,
+                autoplaySpeed: 1000,
+                autoplayHoverPause: false,
+                responsive: {
+                    0: {
+                        items: 1,
+                        nav: true
+                    },
+                    480: {
+                        items: 1,
+                        nav: true
+                    },
+                    700: {
+                        items: 1,
+                        nav: true
+                    },
+                    1090: {
+                        items: 1,
+                        nav: true
+                    }
+                }
+            })
+        })
+    </script>
+    <!-- //script for blog post slider -->
+
+    <!-- script for tesimonials carousel slider -->
+    <script>
+        $(document).ready(function () {
+            $("#owl-demo1").owlCarousel({
+                loop: true,
+                nav: false,
+                margin: 50,
+                responsiveClass: true,
+                responsive: {
+                    0: {
+                        items: 1,
+                        nav: false
+                    },
+                    736: {
+                        items: 1,
+                        nav: false
+                    }
+                }
+            })
+        })
+    </script>
+    <!-- //script for tesimonials carousel slider -->
+
+    <script src="/static/hostelhunter/js/jquery.magnific-popup.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.popup-with-zoom-anim').magnificPopup({
+                type: 'inline',
+
+                fixedContentPos: false,
+                fixedBgPos: true,
+
+                overflowY: 'auto',
+
+                closeBtnInside: true,
+                preloader: false,
+
+                midClick: true,
+                removalDelay: 300,
+                mainClass: 'my-mfp-zoom-in'
+            });
+
+            $('.popup-with-move-anim').magnificPopup({
+                type: 'inline',
+
+                fixedContentPos: false,
+                fixedBgPos: true,
+
+                overflowY: 'auto',
+
+                closeBtnInside: true,
+                preloader: false,
+
+                midClick: true,
+                removalDelay: 300,
+                mainClass: 'my-mfp-slide-bottom'
+            });
+        });
+    </script>
+
+    <!-- disable body scroll which navbar is in active -->
+    <script>
+        $(function () {
+            $('.navbar-toggler').click(function () {
+                $('body').toggleClass('noscroll');
+            })
+        });
+    </script>
+    <!-- disable body scroll which navbar is in active -->
+
+    <!-- MENU-JS -->
+    <script>
+        $(window).on("scroll", function () {
+            var scroll = $(window).scrollTop();
+
+            if (scroll >= 80) {
+                $("#site-header").addClass("nav-fixed");
+            } else {
+                $("#site-header").removeClass("nav-fixed");
+            }
+        });
+
+        //Main navigation Active Class Add Remove
+        $(".navbar-toggler").on("click", function () {
+            $("header").toggleClass("active");
+        });
+        $(document).on("ready", function () {
+            if ($(window).width() > 991) {
+                $("header").removeClass("active");
+            }
+            $(window).on("resize", function () {
+                if ($(window).width() > 991) {
+                    $("header").removeClass("active");
+                }
+            });
+        });
+    </script>
+    <!-- //MENU-JS -->
+
+    <!-- bootstrap -->
+    <script src="/static/hostelhunter/js/bootstrap.min.js"></script>
+{% endblock %}
+</body>
+
+</html>
