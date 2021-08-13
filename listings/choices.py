@@ -1,7 +1,7 @@
 category_choices = {
     'Boys': 'Boys',
     'Girls': 'Girls',
-    'Both': 'Both'
+    'Both': 'Both',
 }
 
 standard_choices = {
