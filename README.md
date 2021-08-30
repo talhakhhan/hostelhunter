@@ -1,1 +1,1 @@
-# hostelhuntergithub.io
+# hostelhunter
